@@ -1,0 +1,144 @@
+import random  # Tasodifiy son generatsiya qilish uchun kerak
+
+
+def son_top(x=20):
+    """
+    Kompyuter tasodifiy son o'ylaydi, foydalanuvchi uni topishga harakat qiladi.
+    x - qidiruv oralig'ining yuqori chegarasi (1 dan x gacha)
+    Qaytaradi: foydalanuvchi nechta urinishda topganini (int)
+    """
+    son = random.randint(1, x)   # Kompyuter 1 dan x gacha tasodifiy son tanlaydi
+    taxminlar = 0                # Urinishlar sonini hisoblash uchun sanoq
+
+    while True:  # Foydalanuvchi to'g'ri topguncha davom etadi
+        taxmin = int(input("son ayting"))   # Foydalanuvchi taxminini kiritadi
+        taxminlar += 1                       # Har bir urinishda sanoqni oshiramiz
+
+        if taxmin < son:
+            # Foydalanuvchi kiritgan son yashiringan sondan kichik
+            print(f"Men o'ylagan son {taxmin} dan katta(+) yana harakat qiling")
+        elif taxmin > son:
+            # Foydalanuvchi kiritgan son yashiringan sondan katta
+            print(f"Men o'ylagan son {taxmin} dan kichik(-) yana harakat qiling")
+        else:
+            # Taxmin to'g'ri chiqdi - sikldan chiqamiz
+            print(f"Tabriklaymiz siz {taxminlar} ta taxmin bilan topdingiz")
+            break
+
+    return taxminlar  # Necha urinishda topganini qaytaramiz
+
+
+def son_top_pc(x=20):
+    """
+    Foydalanuvchi son o'ylaydi, kompyuter uni "binary search" usulida topadi.
+    x - qidiruv oralig'ining yuqori chegarasi (1 dan x gacha)
+    Qaytaradi: kompyuter nechta urinishda topganini (int)
+    """
+    input(f"1 dan {x} gacha son o'ylang va istalgan tugmani bosing")  # Foydalanuvchi son o'ylaydi
+
+    boshi = 1     # Qidiruv oralig'ining pastki chegarasi
+    oxiri = x     # Qidiruv oralig'ining yuqori chegarasi
+    taxminlar = 0  # Kompyuter urinishlar sonini hisoblash uchun sanoq
+
+    while True:  # Kompyuter to'g'ri topguncha davom etadi
+        taxminlar += 1
+        # Kompyuter joriy oraliqdan tasodifiy son tanlaydi (binary search mantig'i)
+        taxmin = random.randint(boshi, oxiri)
+
+        javob = input(f"men {taxmin} deb o'yladim. To'g'ri(t), katta(+), kichik(-)? ")
+
+        if javob == "+":
+            # Yashirin son kompyuter taxminidan katta ekan - pastki chegarani oshiramiz
+            boshi = taxmin + 1
+        elif javob == "-":
+            # Yashirin son kompyuter taxminidan kichik ekan - yuqori chegarani kamaytiramiz
+            oxiri = taxmin - 1
+        else:
+            # Kompyuter to'g'ri topdi
+            print(f"men {taxminlar} ta taxmin bilan topdim")
+            break
+
+    return taxminlar  # Necha urinishda topganini qaytaramiz
+
+
+def play(x=20):
+    """
+    Asosiy o'yin funksiyasi: foydalanuvchi va kompyuterni bir-biriga qarshi qo'yadi.
+    Har ikkalasi ham son topish o'yinini o'ynaydi, kamroq urinish qilgan g'olib bo'ladi.
+    Bir necha marta o'ynash va umumiy hisobni yuritish imkoniyati bor.
+    """
+    x = int(input("qanday oraliqda o'ynaymiz (masalan: 20)? "))  # O'yin oralig'ini so'raymiz
+    yana = "ha"       # O'yinni davom ettirish/tugatish uchun bayroq
+    ball_kom = 0      # Foydalanuvchi g'alabalari soni
+    ball_pc = 0       # Kompyuter g'alabalari soni
+
+    while yana == "ha":  # Foydalanuvchi "ha" deb javob bergunicha o'ynaymiz
+        natija_kom = son_top(x)      # Foydalanuvchi qancha urinishda topdi
+        natija_pc = son_top_pc(x)    # Kompyuter qancha urinishda topdi
+
+        # Kamroq urinish qilgan g'olib hisoblanadi
+        if natija_kom > natija_pc:
+            print("Kompyuter yutdi")
+            ball_pc += 1
+        elif natija_kom < natija_pc:
+            print("Siz yutdingiz")
+            ball_kom += 1
+        else:
+            print("Durrang")
+
+        print(f"Hozirgi hisob -> Siz: {ball_kom}, Kompyuter: {ball_pc}")
+        yana = input("Yana o'ynaysizmi? Ha/yo'q: ").lower()  # Davom etish so'raladi
+
+    # O'yin tugagach yakuniy natija chiqariladi
+    print(f"\nO'yin tugadi! Yakuniy hisob -> Siz: {ball_kom}, Kompyuter: {ball_pc}")
+    if ball_kom > ball_pc:
+        print("Umumiy g'olib: SIZ!")
+    elif ball_kom < ball_pc:
+        print("Umumiy g'olib: KOMPYUTER!")
+    else:
+        print("Umumiy natija: DURRANG!")
+
+
+# Dastur shu yerdan boshlanadi
+play()
+
+
+"""
+=== NATIJA MISOLI (misol uchun ishga tushirish) ===
+
+qanday oraliqda o'ynaymiz (masalan: 20)? 15
+son ayting 6
+Men o'ylagan son 6 dan kichik(-) yana harakat qiling
+son ayting 5
+Men o'ylagan son 5 dan kichik(-) yana harakat qiling
+son ayting 3
+Men o'ylagan son 3 dan kichik(-) yana harakat qiling
+son ayting 1
+Tabriklaymiz siz 4 ta taxmin bilan topdingiz
+1 dan 15 gacha son o'ylang va istalgan tugmani bosing
+men 12 deb o'yladim. To'g'ri(t), katta(+), kichik(-)? +
+men 15 deb o'yladim. To'g'ri(t), katta(+), kichik(-)? t
+men 2 ta taxmin bilan topdim
+Kompyuter yutdi
+Hozirgi hisob -> Siz: 0, Kompyuter: 1
+Yana o'ynaysizmi? Ha/yo'q: ha
+son ayting 2
+Men o'ylagan son 2 dan katta(+) yana harakat qiling
+son ayting 7
+Men o'ylagan son 7 dan kichik(-) yana harakat qiling
+son ayting 5
+Men o'ylagan son 5 dan katta(+) yana harakat qiling
+son ayting 6
+Tabriklaymiz siz 4 ta taxmin bilan topdingiz
+1 dan 15 gacha son o'ylang va istalgan tugmani bosing
+men 7 deb o'yladim. To'g'ri(t), katta(+), kichik(-)? +
+men 11 deb o'yladim. To'g'ri(t), katta(+), kichik(-)? -
+men 9 deb o'yladim. To'g'ri(t), katta(+), kichik(-)? t
+men 3 ta taxmin bilan topdim
+Kompyuter yutdi
+Hozirgi hisob -> Siz: 0, Kompyuter: 2
+Yana o'ynaysizmi? Ha/yo'q: yo'q
+
+O'yin tugadi! Yakuniy hisob -> Siz: 0, Kompyuter: 2
+Umumiy g'olib: KOMPYUTER!
+"""
