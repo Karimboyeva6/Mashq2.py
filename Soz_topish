@@ -1,0 +1,117 @@
+import random
+from uz_words import words
+
+
+def soz_top():
+    soz = random.choice(words)
+    soz = soz.upper()
+    while "-" in soz or " " in soz:
+        soz = random.choice(words)
+        soz = soz.upper()
+    return soz
+
+
+def display(harflar, soz):
+    y_soz = ""
+    for harf in soz:
+        if harf in harflar:
+            y_soz += harf
+        else:
+            y_soz += "-"
+    return y_soz
+
+
+def play():
+    yana = "ha"
+
+    while yana == "ha":
+        soz = soz_top()
+        noyob_harflar = set(soz)
+        harflar = ""
+        jon = 0
+
+        while noyob_harflar:
+            print(display(harflar, soz))
+            harf = input("harf kiriting: ").upper()
+
+            if harf in harflar:
+                print("bu harfni avval kiritgansiz")
+                continue
+            elif harf in soz:
+                noyob_harflar.remove(harf)
+                print(f"bu harf {harf} to'g'ri")
+            else:
+                print("bu harf yo'q")
+                jon += 1
+
+            harflar += harf
+
+        print(f"tabriklaymiz siz {soz} so'zni {len(harflar)} ta taxmin bilan topdingiz va {jon} ta xato qildingiz")
+
+        yana = input("Yana o'ynaysizmi? (ha/yo'q): ").lower()
+
+
+if __name__ == "__main__":
+    play()
+
+
+"""
+=== NATIJA MISOLI (misol uchun ishga tushirish) ===
+
+---------
+harf kiriting: й
+bu harf yo'q
+---------
+harf kiriting: а
+bu harf А to'g'ri
+А--------
+harf kiriting: в
+bu harf yo'q
+А--------
+harf kiriting: р
+bu harf yo'q
+А--------
+harf kiriting: б
+bu harf Б to'g'ri
+АБ-------
+harf kiriting: м
+bu harf М to'g'ri
+АБ---М---
+harf kiriting: с
+bu harf yo'q
+АБ---М---
+harf kiriting: я
+bu harf yo'q
+АБ---М---
+harf kiriting: ш
+bu harf yo'q
+АБ---М---
+harf kiriting: э
+bu harf yo'q
+АБ---М---
+harf kiriting: ж
+bu harf yo'q
+АБ---М---
+harf kiriting: о
+bu harf О to'g'ri
+АБО--М---
+harf kiriting: л
+bu harf yo'q
+АБО--М---
+harf kiriting: ч
+bu harf yo'q
+АБО--М---
+harf kiriting: д
+bu harf yo'q
+АБО--М---
+harf kiriting: н
+bu harf Н to'g'ri
+АБОН-М-Н-
+harf kiriting: е
+bu harf Е to'g'ri
+АБОНЕМЕН-
+harf kiriting: т
+bu harf Т to'g'ri
+tabriklaymiz siz АБОНЕМЕНТ so'zni 9 ta taxmin bilan va 11 ta xato qildingiz
+Bu safar ko'p xato qildingiz, keyingi safar yaxshiroq harakat qiling!
+Yana o'ynaysizmi? (ha/yo'q): yo'q
