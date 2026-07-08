@@ -1,0 +1,32 @@
+"""
+Lotin <-> Kirill Konverter
+--------------------------
+Bu dastur son yoki so'z topish o'yinlariga o'xshab konsolda ishlaydi:
+foydalanuvchi matn kiritadi, dastur javob qaytaradi va yana so'raydi,
+'stop' deyilguncha davom etadi.
+
+NATIJA NAMUNASI (misol o'yin sessiyasi):
+
+    Matn kiriting (chiqish uchun 'stop' yozing): salom
+    салом
+    Matn kiriting (chiqish uchun 'stop' yozing): Ozbekiston
+    Озбекистон
+    Matn kiriting (chiqish uchun 'stop' yozing): Салом дунё
+    Salom dunyo
+    Matn kiriting (chiqish uchun 'stop' yozing): stop
+    Dastur tugadi.
+"""
+
+from Latin_Crilik_bot import to_cyrillic, to_latin
+
+while True:
+    matn = input("Matn kiriting (chiqish uchun 'stop' yozing): ")
+    if matn.lower() == "stop":
+        print("Dastur tugadi.")
+        break
+    if matn.isascii():
+        print(to_cyrillic(matn))
+    else:
+        print(to_latin(matn))
+
+Latin_Crilik_bot.py` faylining to'liq kodi shu README'dan keyingi faylda (repo ichidagi `Latin_Crilik_bot.py` faylida) keltirilgan.
